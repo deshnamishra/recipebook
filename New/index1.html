@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delish Recipes</title>
+  <link rel="icon" type="image/jpg" href="logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #e74c3c;
+      --accent-color: #f39c12;
+      --success-color: #27ae60;
+      --text-primary: #2c3e50;
+      --text-secondary: #7f8c8d;
+      --text-light: #95a5a6;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      --shadow-light: 0 2px 20px rgba(0, 0, 0, 0.08);
+      --shadow-medium: 0 4px 25px rgba(0, 0, 0, 0.12);
+      --shadow-heavy: 0 8px 35px rgba(0, 0, 0, 0.15);
+      --border-radius: 12px;
+      --border-radius-lg: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 15px 0;
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    nav .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+      align-items: center;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 8px 0;
+    }
+
+    nav ul li a:hover {
+      color: var(--secondary-color);
+    }
+
+    .nav-categories {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--bg-primary);
+      min-width: 200px;
+      box-shadow: var(--shadow-medium);
+      border-radius: var(--border-radius);
+      padding: 20px 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: var(--transition);
+    }
+
+    nav ul li:hover .nav-categories {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-categories a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .nav-categories a:hover {
+      background: var(--bg-secondary);
+      color: var(--secondary-color);
+    }
+
+    /* Header */
+    header {
+      background-image: url(homepage.jpg);
+      background-size:cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 100vh;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .header-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      color: rgb(11, 1, 39);
+      margin-bottom: 20px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .header-content p {
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      color: rgba(40, 1, 1, 0.9);
+      margin-bottom: 40px;
+      font-weight: 300;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .header-content a {
+      display: inline-block;
+      background: var(--secondary-color);
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      margin: 0 10px 10px 0;
+      transition: var(--transition);
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+
+    .header-content a:hover {
+      background: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    /* Categories Section */
+    .categories-section {
+      padding: 100px 0;
+      background: var(--bg-primary);
+    }
+
+    .categories-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .categories-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .categories-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      border-radius: 2px;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .category-card {
+      position: relative;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-light);
+      transition: var(--transition);
+      height: 350px;
+    }
+
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-heavy);
+    }
+
+    .category-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-slow);
+    }
+
+    .category-card:hover .category-image {
+      transform: scale(1.05);
+    }
+
+    .category-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 30px 20px 20px;
+      color: white;
+    }
+
+    .category-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .category-link {
+      display: inline-block;
+      background: var(--secondary-color);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .category-link:hover {
+      background: #c0392b;
+      transform: translateY(-2px);
+    }
+
+    /* Why Use Our Platform Section */
+    .platform-section {
+      padding: 100px 0;
+      background: var(--bg-primary);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      border-radius: 2px;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 50px 30px;
+      background: var(--bg-primary);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-light);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: var(--transition-slow);
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-heavy);
+    }
+
+    .feature-icon {
+      font-size: 4rem;
+      margin-bottom: 25px;
+      display: block;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    }
+
+    .feature-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+
+    .feature-description {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    /* Newsletter Section */
+    .newsletter {
+      padding: 80px 0;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+      position: relative;
+    }
+
+    .newsletter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+      pointer-events: none;
+    }
+
+    .newsletter-container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .newsletter h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .newsletter p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .newsletter form {
+      display: flex;
+      gap: 12px;
+      max-width: 400px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px;
+      border-radius: 50px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .newsletter input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border-radius: 50px;
+      outline: none;
+    }
+
+    .newsletter input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .newsletter button {
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .newsletter button:hover {
+      background: #c0392b;
+      transform: translateX(2px);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary-color);
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    footer p {
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    footer a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0px);
+      }
+      50% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .container {
+        padding: 0 30px;
+      }
+      
+      nav .container {
+        padding: 0 30px;
+      }
+      
+      .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+      }
+      
+      .categories-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 20px;
+      }
+      
+      nav .container {
+        padding: 0 20px;
+      }
+      
+      nav ul {
+        gap: 20px;
+      }
+      
+      header {
+        padding: 60px 0 80px;
+      }
+      
+      .header-content {
+        padding: 0 20px;
+      }
+      
+      .platform-section, .categories-section {
+        padding: 60px 0;
+      }
+      
+      .section-header {
+        margin-bottom: 50px;
+      }
+      
+      .features-grid, .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      
+      .newsletter form {
+        flex-direction: column;
+        gap: 15px;
+        border-radius: var(--border-radius);
+        padding: 20px;
+      }
+      
+      .newsletter input,
+      .newsletter button {
+        border-radius: var(--border-radius);
+      }
+      
+      .category-card {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-content {
+        padding: 0 15px;
+      }
+      
+      .container {
+        padding: 0 15px;
+      }
+      
+      nav .container {
+        padding: 0 15px;
+      }
+      
+      nav ul {
+        display: none;
+      }
+      
+      .category-card {
+        height: 250px;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus states */
+    .feature-card:focus,
+    .newsletter button:focus,
+    .newsletter input:focus,
+    .category-card:focus {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  
+  <nav>
+    <div class="container">
+      <div class="logo">Delish Recipes</div>
+      <ul>
+        <li>
+          <a href="#categories">Categories</a>
+          <div class="nav-categories">
+            <a href="breakfast.html"><i>🍳</i> Breakfast</a>
+            <a href="lunch.html"><i>🍜</i> Lunch</a>
+            <a href="dessert.html"><i>🍰</i> Dessert</a>
+            <a href="snacks.html"><i>🍿</i> Snacks</a>
+            <a href="drinks.html"><i>🍹</i> Drinks</a>
+            <a href="brunch.html"><i>🥞</i> Brunch</a>
+            <a href="appetizer.html"><i>🍥</i> Appetizers</a>
+          </div>
+        </li>
+        <li><a href="#newsletter">Subscribe</a></li>
+        <li><a href="#footer">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <div class="header-content">
+      <h1>Welcome to Delish Recipes</h1>
+      <p>Your gateway to mouth-watering dishes and culinary adventures.</p>
+      <a href="#categories">Explore Recipes</a>
+      <a href="ownrecipes.html">Add Your Recipe</a>
+    </div>
+    <div class="scroll-indicator">↓</div>
+  </header>
+
+  <!-- Categories Section -->
+  <section id="categories" class="categories-section">
+    <div class="categories-container">
+      <h2 class="categories-title">Recipe Categories</h2>
+      <div class="categories-grid">
+        <div class="category-card">
+          <img src="https://images.kitchenstories.io/communityImages/f4604e05f6a9eaca99afddd69e849005_c02485d4-0841-4de6-b152-69deb38693f2.jpg" alt="Breakfast" class="category-image">
+          <div class="category-overlay">
+            <h3 class="category-name">Breakfast</h3>
+            <a href="breakfast.html" class="category-link">View Recipes</a>
+          </div>
+        </div>
+        
+        <div class="category-card">
+          <img src="https://www.eatingwell.com/thmb/zSh86Cx-fybgBu5-baxombw1OiA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/diy-taco-lunch-box-54f8791776b64900b285fbfc22a4f0bc.jpg" alt="Lunch" class="category-image">
+          <div class="category-overlay">
+            <h3 class="category-name">Lunch</h3>
+            <a href="lunch.html" class="category-link">View Recipes</a>
+          </div>
+        </div>
+        
+        <div class="category-card">
+          <img src="https://nutricia.com.au/fortisip/wp-content/uploads/sites/8/2020/09/Forticreme-Chocolate-Chocolate-Layered-Dessert-1-scaled.jpeg" alt="Dessert" class="category-image">
+          <div class="category-overlay">
+            <h3 class="category-name">Dessert</h3>
+            <a href="dessert.html" class="category-link">View Recipes</a>
+          </div>
+        </div>
+        
+        <div class="category-card">
+          <img src="https://www.hotelierindia.com/cloud/2024/10/20/indian-tea-time-snacks-in-group-sev-chivda-farsan-mixture-bakarwadi-served-in-different-bowls-free-photo-1.jpg" alt="Snacks" class="category-image">
+          <div class="category-overlay">
+            <h3 class="category-name">Snacks</h3>
+            <a href="snacks.html" class="category-link">View Recipes</a>
+          </div>
+        </div>
+        
+        <div class="category-card">
+          <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/peach-iced-tea-c5aa1bb.jpg?quality=90&resize=500,454" alt="Drinks" class="category-image">
+          <div class="category-overlay">
+            <h3 class="category-name">Drinks</h3>
+            <a href="drinks.html" class="category-link">View Recipes</a>
+          </div>
+        </div>
+        
+        <div class="category-card">
+          <img src="https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_1:1/k%2FFood%20Fest%202021%2FBrunch%20Fest%2FPhoto%2F2021-03-30_ATK-47735-no-whip_no-yolk-break_3-2" alt="Brunch" class="category-image">
+          <div class="category-overlay">
+            <h3 class="category-name">Brunch</h3>
+            <a href="brunch.html" class="category-link">View Recipes</a>
+          </div>
+        </div>
+        
+        <div class="category-card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFNreYBTzSfigL_P8qak_76h7QhtYZd4hDWQ&s" alt="Appetizers" class="category-image">
+          <div class="category-overlay">
+            <h3 class="category-name">Appetizers</h3>
+            <a href="appetizer.html" class="category-link">View Recipes</a>
+          </div>
+        </div>
+        
+        <div class="category-card">
+          <img src="https://www.kindpng.com/picc/m/436-4362981_fork-knife-and-spoon-icon-cross-hd-png.png" alt="More Categories" class="category-image">
+          <div class="category-overlay">
+            <h3 class="category-name">And Many More</h3>
+            <a href="mainpage.html" class="category-link">Explore All</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="platform" class="platform-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Why Use Our Platform</h2>
+        <p class="section-subtitle">Discover what makes our recipe platform the perfect choice for culinary enthusiasts and home cooks alike</p>
+      </div>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">👨‍🍳</span>
+          <h3 class="feature-title">Chef-Tested Recipes</h3>
+          <p class="feature-description">Every recipe is developed and tested by professional chefs to ensure perfect results every time. Our culinary experts refine each dish until it meets our high standards.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">⏱️</span>
+          <h3 class="feature-title">Time-Efficient Cooking</h3>
+          <p class="feature-description">Clear prep and cook times help you plan your meals effectively. We provide realistic timing estimates and smart shortcuts to make cooking more efficient.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">🌟</span>
+          <h3 class="feature-title">Step-by-Step Guidance</h3>
+          <p class="feature-description">Detailed instructions with helpful tips make even complex recipes accessible. Our clear, photo-illustrated steps guide you through each cooking process.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">📱</span>
+          <h3 class="feature-title">Mobile-Friendly Design</h3>
+          <p class="feature-description">Cook with confidence using our responsive design that works perfectly on all devices. Access your favorite recipes anywhere, anytime.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">🎯</span>
+          <h3 class="feature-title">Personalized Experience</h3>
+          <p class="feature-description">Smart recommendations based on your preferences and dietary needs. Our platform learns what you love and suggests new recipes you'll enjoy.</p>
+        </div>
+        
+        <div class="feature-card">
+          <span class="feature-icon">🌍</span>
+          <h3 class="feature-title">Global Cuisine Library</h3>
+          <p class="feature-description">Explore authentic recipes from around the world. From traditional family dishes to modern fusion, discover flavors from every corner of the globe.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter" id="newsletter">
+    <div class="container">
+      <div class="newsletter-container">
+        <h2>Subscribe to Our Newsletter</h2>
+        <p>Get the latest recipes and cooking tips straight to your inbox!</p>
+        <form>
+          <input type="email" placeholder="Enter your email address" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <p>&copy; 2024 Delish Recipes.</p>
+    <p>Follow us on <a href="#">Facebook</a>, <a href="#">Instagram</a>, and <a href="#">Twitter</a>.</p>
+  </footer>
+          
+  <!-- Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+  <script src="./cred.js"></script>
+  <script type="module">
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+  <script src="script.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth scrolling for all navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // 3D effect for feature cards
+      const featureCards = document.querySelectorAll('.feature-card');
+      featureCards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const rotateX = (y - centerY) / 15;
+          const rotateY = (centerX - x) / 15;
+          
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+          card.style.transition = 'transform 0.1s';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+          card.style.transition = 'transform 0.3s';
+        });
+      });
+
+      // 3D effect for category cards
+      const categoryCards = document.querySelectorAll('.category-card');
+      categoryCards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const rotateX = (y - centerY) / 20;
+          const rotateY = (centerX - x) / 20;
+          
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+          card.style.transition = 'transform 0.1s';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+          card.style.transition = 'transform 0.3s';
+        });
+      });
+
+      // Newsletter form submission
+      const newsletterForm = document.querySelector('.newsletter form');
+      if (newsletterForm) {
+        newsletterForm.addEventListener('submit', e => {
+          e.preventDefault();
+          const email = newsletterForm.querySelector('input').value;
+          if (email && email.includes('@')) {
+            alert(`Thank you for subscribing! You'll receive our latest recipes soon.`);
+            newsletterForm.reset();
+          } else {
+            alert('Please enter a valid email address.');
+          }
+        });
+      }
+
+      // Navbar background change on scroll
+      const nav = document.querySelector('nav');
+      window.addEventListener('scroll', () => {
+        if (nav) {
+          if (window.scrollY > 50) {
+            nav.style.background = 'rgba(255, 255, 255, 0.98)';
+            nav.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+          } else {
+            nav.style.background = 'rgba(255, 255, 255, 0.95)';
+            nav.style.boxShadow = 'none';
+          }
+        }
+      });
+
+      // Smooth scroll indicator
+      const scrollIndicator = document.querySelector('.scroll-indicator');
+      if (scrollIndicator) {
+        scrollIndicator.addEventListener('click', () => {
+          const platformSection = document.querySelector('#platform');
+          if (platformSection) {
+            platformSection.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        });
+      }
+
+      // Intersection observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+          }
+        });
+      }, observerOptions);
+
+      // Observe elements for animation
+      const animateElements = document.querySelectorAll('.feature-card, .category-card');
+      animateElements.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.animationDelay = `${index * 0.1}s`;
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUT IN YOUR OWN RECIPE</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  <h1>Submit Your Recipe</h1>
+  <form id="recipeForm">
+
+    <label for="dishName">Name of the Dish:</label>
+    <input type="text" id="dishName" name="dishName" required>
+
+    <label for="ingredients">Ingredients:</label>
+    <textarea id="ingredients" name="ingredients" rows="4" required></textarea>
+
+    <label for="category">Category:</label>
+    <select id="category" name="category" required>
+        <option value="breakfast">Breakfast</option>
+        <option value="lunch">Lunch</option>
+        <option value="dessert">Dessert</option>
+        <option value="snack">Snack</option>
+        <option value="brunch">Brunch</option>
+        <option value="drinks">Drinks</option>
+        <option value="appetizer">Appetizers</option>
+    </select>
+
+    <label for="healthiness">Healthiness:</label>
+    <select id="healthiness" name="healthiness" required>
+        <option value="healthy">Healthy</option>
+        <option value="junk">Junk</option>
+    </select>
+
+    <label for="prepTime">Preparation Time (in minutes):</label>
+    <input type="text" id="prepTime" name="prepTime" required>
+
+    <label for="calories">Calories (optional):</label>
+    <input type="text" id="calories" name="calories">
+
+    <input type="submit" value="Submit Recipe">
+</form>
+
+</body>
+          
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { firebaseConfig } from './cred.js';
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("recipeForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const dishName = document.getElementById("dishName").value;
+      const ingredients = document.getElementById("ingredients").value.split("\n").map(i => i.trim()).filter(i => i);
+      const category = document.getElementById("category").value;
+      const healthiness = document.getElementById("healthiness").value;
+      const prepTime = document.getElementById("prepTime").value;
+      const calories = document.getElementById("calories").value || "Not Provided";
+
+      const newRecipe = {
+        dishName,
+        ingredients,
+        category,
+        healthiness,
+        prepTime,
+        calories
+      };
+
+      try {
+        // Add to main collection
+        await addDoc(collection(db, "savedrecipes"), newRecipe);
+
+        // Add to subcollection
+        await addDoc(collection(db, `savedrecipes/${category}/recipes`), newRecipe);
+
+        alert("Recipe added successfully!");
+        form.reset();
+      } catch (error) {
+        console.error("Error adding recipe: ", error);
+        alert("Error saving recipe. Please try again.");
+      }
+    });
+  });
+</script>
+
+
+</html>

@@ -1,0 +1,16 @@
+# Environment & credentials
+.env
+cred.js
+cred2.js
+*.env
+
+# Firebase service account key
+*.json
+!firebase.json   # keep firebase.json tracked
+!firestore.rules # keep firestore.rules tracked
+!firestore.indexes.json
+!storage.rules
+!database.rules.json
+
+# Logs
+*.log

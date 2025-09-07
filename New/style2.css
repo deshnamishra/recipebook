@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('recipe.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h1 {
+    color: #ff0062;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.378);
+    margin: 2rem 0;
+    text-align: left
+}
+
+form {
+    background: rgba(255, 255, 255, 0.374);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    width: 27%;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ff8c00;
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #dddddd;
+    background-color: rgba(255, 255, 255, 0.627);
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+select {
+    background-color: rgba(255, 255, 255, 0.619);
+}
+
+input[type="submit"] {
+    background-color: #e6a557;
+    color: rgb(255, 255, 255);
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #e6a557;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    form {
+        width: 95%;
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+}

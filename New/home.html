@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Delish Recipes - Culinary Excellence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #f39c12;
+            --success-color: #27ae60;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --text-light: #95a5a6;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --shadow-light: 0 2px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 4px 25px rgba(0, 0, 0, 0.12);
+            --shadow-heavy: 0 8px 35px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.95) 0%, rgba(231, 76, 60, 0.85) 100%),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="1000" height="1000" fill="url(%23grain)"/></svg>');
+            padding: 80px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-weight: 300;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .stat {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Categories Section */
+        .categories-section {
+            padding: 100px 0;
+            background: var(--bg-primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .category-card {
+            position: relative;
+            height: 400px;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+            background: var(--bg-primary);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .category-card:hover .category-image {
+            transform: scale(1.05);
+        }
+
+        .category-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 40px 25px 25px;
+            color: white;
+        }
+
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .category-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .category-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .category-card:hover .category-button {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(5px);
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            position: relative;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            pointer-events: none;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .newsletter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .newsletter-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 50px;
+            outline: none;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .newsletter-button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .newsletter-button:hover {
+            background: #c0392b;
+            transform: translateX(2px);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 30px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+            }
+            
+            .hero-stats {
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .hero {
+                padding: 60px 0 80px;
+            }
+            
+            .hero-content {
+                padding: 0 20px;
+            }
+            
+            .categories-section {
+                padding: 60px 0;
+            }
+            
+            .section-header {
+                margin-bottom: 50px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .category-card {
+                height: 350px;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 30px;
+                align-items: center;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                gap: 15px;
+                border-radius: var(--border-radius);
+                padding: 20px;
+            }
+            
+            .newsletter-input,
+            .newsletter-button {
+                border-radius: var(--border-radius);
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content {
+                padding: 0 15px;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus states */
+        .category-card:focus,
+        .newsletter-button:focus,
+        .newsletter-input:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        /* Loading states */
+        .category-image {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Recipe Categories</h2>
+                <p class="section-subtitle">From morning delights to evening treats, discover recipes organized by meal type and occasion</p>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card" tabindex="0" role="button" aria-label="Browse breakfast recipes">
+                    <img src="https://images.kitchenstories.io/communityImages/f4604e05f6a9eaca99afddd69e849005_c02485d4-0841-4de6-b152-69deb38693f2.jpg" 
+                         alt="Fresh breakfast spread with eggs, toast, and fruit" 
+                         class="category-image"
+                         loading="lazy">
+                    <div class="category-content">
+                        <h3 class="category-title">Breakfast</h3>
+                        <p class="category-description">Start your day right with energizing morning meals</p>
+                        <span class="category-button">
+                            Explore Recipes
+                            <span>→</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="category-card" tabindex="0" role="button" aria-label="Browse lunch recipes">
+                    <img src="https://www.eatingwell.com/thmb/zSh86Cx-fybgBu5-baxombw1OiA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/diy-taco-lunch-box-54f8791776b64900b285fbfc22a4f0bc.jpg" 
+                         alt="Colorful taco lunch box with fresh ingredients" 
+                         class="category-image"
+                         loading="lazy">
+                    <div class="category-content">
+                        <h3 class="category-title">Lunch</h3>
+                        <p class="category-description">Satisfying midday meals that fuel your afternoon</p>
+                        <span class="category-button">
+                            Explore Recipes
+                            <span>→</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="category-card" tabindex="0" role="button" aria-label="Browse dessert recipes">
+                    <img src="https://nutricia.com.au/fortisip/wp-content/uploads/sites/8/2020/09/Forticreme-Chocolate-Chocolate-Layered-Dessert-1-scaled.jpeg" 
+                         alt="Elegant chocolate layered dessert" 
+                         class="category-image"
+                         loading="lazy">
+                    <div class="category-content">
+                        <h3 class="category-title">Dessert</h3>
+                        <p class="category-description">Sweet endings that make every meal memorable</p>
+                        <span class="category-button">
+                            Explore Recipes
+                            <span>→</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="category-card" tabindex="0" role="button" aria-label="Browse snack recipes">
+                    <img src="https://www.hotelierindia.com/cloud/2024/10/20/indian-tea-time-snacks-in-group-sev-chivda-farsan-mixture-bakarwadi-served-in-different-bowls-free-photo-1.jpg" 
+                         alt="Variety of Indian tea-time snacks in colorful bowls" 
+                         class="category-image"
+                         loading="lazy">
+                    <div class="category-content">
+                        <h3 class="category-title">Snacks</h3>
+                        <p class="category-description">Quick bites perfect for any time of day</p>
+                        <span class="category-button">
+                            Explore Recipes
+                            <span>→</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="category-card" tabindex="0" role="button" aria-label="Browse drink recipes">
+                    <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/peach-iced-tea-c5aa1bb.jpg?quality=90&resize=500,454" 
+                         alt="Refreshing peach iced tea with garnish" 
+                         class="category-image"
+                         loading="lazy">
+                    <div class="category-content">
+                        <h3 class="category-title">Drinks</h3>
+                        <p class="category-description">Refreshing beverages for every season and occasion</p>
+                        <span class="category-button">
+                            Explore Recipes
+                            <span>→</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="category-card" tabindex="0" role="button" aria-label="Browse brunch recipes">
+                    <img src="https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_1:1/k%2FFood%20Fest%202021%2FBrunch%20Fest%2FPhoto%2F2021-03-30_ATK-47735-no-whip_no-yolk-break_3-2" 
+                         alt="Elegant brunch spread with eggs and pastries" 
+                         class="category-image"
+                         loading="lazy">
+                    <div class="category-content">
+                        <h3 class="category-title">Brunch</h3>
+                        <p class="category-description">Weekend leisure meals that combine the best of both worlds</p>
+                        <span class="category-button">
+                            Explore Recipes
+                            <span>→</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="category-card" tabindex="0" role="button" aria-label="Browse appetizer recipes">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFNreYBTzSfigL_P8qak_76h7QhtYZd4hDWQ&s" 
+                         alt="Elegant appetizer platter" 
+                         class="category-image"
+                         loading="lazy">
+                    <div class="category-content">
+                        <h3 class="category-title">Appetizers</h3>
+                        <p class="category-description">Perfect starters to begin any dining experience</p>
+                        <span class="category-button">
+                            Explore Recipes
+                            <span>→</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Our Recipes</h2>
+                <p class="section-subtitle">Every recipe is tested, refined, and designed for success in your kitchen</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">👨‍🍳</span>
+                    <h3 class="feature-title">Chef-Tested</h3>
+                    <p class="feature-description">Every recipe is developed and tested by professional chefs to ensure perfect results every time.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">⏱️</span>
+                    <h3 class="feature-title">Time-Efficient</h3>
+                    <p class="feature-description">Clear prep and cook times help you plan your meals and manage your kitchen time effectively.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <span class="feature-icon">🌟</span>
+                    <h3 class="feature-title">Step-by-Step</h3>
+                    <p class="feature-description">Detailed instructions with helpful tips make even complex recipes accessible to home cooks.</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Newsletter Section -->
+    <!-- <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-container">
+                <h2 class="newsletter-title">Stay Updated</h2>
+                <p class="newsletter-subtitle">Get the latest recipes and cooking tips delivered straight to your inbox</p>
+                <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+                    <input 
+                        type="email" 
+                        class="newsletter-input" 
+                        placeholder="Enter your email address"
+                        required
+                        aria-label="Email address for newsletter">
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section> -->
+
+    <script>
+        // Handle newsletter form submission
+        /*function handleNewsletterSubmit(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('.newsletter-input').value;
+            
+            // Simple validation
+            if (email && email.includes('@')) {
+                alert('Thank you for subscribing! You\'ll receive our latest recipes soon.');
+                event.target.reset();
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }*/
+
+        // Add click handlers for category cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryCards = document.querySelectorAll('.category-card');
+            
+            categoryCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = this.querySelector('.category-title').textContent.toLowerCase();
+                    const filename = title + '.html';
+                    
+                    // Since we're in an iframe, we need to communicate with parent
+                    if (window.parent && window.parent !== window) {
+                        // Send message to parent to navigate
+                        window.parent.postMessage({
+                            type: 'navigate',
+                            page: filename
+                        }, '*');
+                    } else {
+                        // Fallback for standalone viewing
+                        window.location.href = filename;
+                    }
+                });
+                
+                // Add keyboard support
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.category-card, .feature-card');
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
